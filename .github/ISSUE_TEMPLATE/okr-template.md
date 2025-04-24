@@ -1,5 +1,6 @@
 ---
 name: okr_template
+about: Create a new Objective & Key Results item
 ---
 
 # 🎯 Objective
