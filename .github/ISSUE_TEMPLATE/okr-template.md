@@ -1,10 +1,6 @@
 ---
-name: OKR
+name: OKR_Template
 about: Create a new Objective & Key Results item
-title: "[OKR] "
-labels:
-  - okr
-assignees: 
 ---
 
 # 🎯 Objective
@@ -15,5 +11,4 @@ assignees:
 2. [Key Result 2]
 3. [Key Result 3]
 
-## 📅 Target Quarter
-- [e.g. QC_25w10]
+
