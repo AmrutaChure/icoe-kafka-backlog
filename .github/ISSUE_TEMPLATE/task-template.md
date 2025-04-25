@@ -1,5 +1,5 @@
 ---
-name: Task
+name: Task_Template
 about: Create a new Task
 ---
 
