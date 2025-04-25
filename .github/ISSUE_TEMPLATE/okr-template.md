@@ -1,5 +1,5 @@
 ---
-name: okr_template
+name: OKR
 about: Create a new Objective & Key Results item
 ---
 
