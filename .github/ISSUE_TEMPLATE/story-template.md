@@ -1,6 +1,6 @@
 ---
 name: Story
-about: Add a new user story
+about: Create a new Story
 ---
 
 ## 📘 Story Title
