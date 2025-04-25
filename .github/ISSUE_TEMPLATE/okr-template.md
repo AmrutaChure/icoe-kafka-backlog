@@ -1,5 +1,5 @@
 ---
-name: OKR
+name: OKR_Template
 about: Create a new Objective & Key Results item
 ---
 
