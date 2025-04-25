@@ -1,5 +1,5 @@
 ---
-name: Feature
+name: FeatureTemplate
 about: Create a new Feature item
 ---
 
