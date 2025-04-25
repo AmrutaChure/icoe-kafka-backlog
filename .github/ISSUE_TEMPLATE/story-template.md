@@ -1,5 +1,5 @@
 ---
-name: Story
+name: Story_Template
 about: Create a new Story
 ---
 
