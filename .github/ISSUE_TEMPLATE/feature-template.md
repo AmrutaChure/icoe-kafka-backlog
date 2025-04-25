@@ -1,6 +1,6 @@
 ---
 name: Feature
-about: Create a new Feature 
+about: Create a new Feature item
 ---
 
 ## 🚀 Feature Title
