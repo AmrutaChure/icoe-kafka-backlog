@@ -1,0 +1,68 @@
+name: Create Sprint Labels
+
+on:
+  workflow_dispatch:   # Trigger the action manually from GitHub UI (you can also schedule it)
+  # schedule: 
+  #   - cron: '0 0 1 * *'   # Uncomment this line to schedule it (e.g., run once per month)
+
+jobs:
+  create_labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install required packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Label Creation Script
+        run: |
+          import requests
+          import os
+
+          # GitHub token for authentication
+          GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
+          REPO = os.getenv('GITHUB_REPOSITORY')
+
+          # Sprint labels (Sprint | StartDate → EndDate)
+          sprint_labels = [
+              "QC_25w10.01 | 2025-03-10 → 2025-03-21",
+              "QC_25w10.02 | 2025-03-24 → 2025-04-04",
+              "QC_25w10.03 | 2025-04-07 → 2025-04-18",
+              "QC_25w10.04 | 2025-04-21 → 2025-05-02",
+              "QC_25w10.05 | 2025-05-05 → 2025-05-16",
+              "QC_25w10.06 | 2025-05-19 → 2025-05-30",
+              "QC_25w22.01 | 2025-06-02 → 2025-06-13",
+              # (Continue all your labels here)
+          ]
+
+          LABEL_COLOR = "1d76db"  # Optional: Update color as needed.
+
+          def create_label(label_name):
+              url = f"https://api.github.com/repos/{REPO}/labels"
+              headers = {
+                  "Authorization": f"Bearer {GITHUB_TOKEN}",
+                  "Accept": "application/vnd.github.v3+json",
+              }
+              payload = {
+                  "name": label_name,
+                  "color": LABEL_COLOR,
+                  "description": f"Sprint Timeline {label_name}"
+              }
+              response = requests.post(url, headers=headers, json=payload)
+              if response.status_code == 201:
+                  print(f"✅ Created label: {label_name}")
+              elif response.status_code == 422:
+                  print(f"⚠️ Label already exists: {label_name}")
+              else:
+                  print(f"❌ Failed to create label: {label_name} | {response.content}")
+
+          for label in sprint_labels:
+              create_label(label)
