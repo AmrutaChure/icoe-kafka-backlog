@@ -1,0 +1,49 @@
+name: Feature
+description: Use this to create a new feature request.
+title: "[Feature]: "
+labels: [feature]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🚀 Feature Request Template
+
+        Fill out the sections below to help us understand your request.
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: Briefly describe the value of this feature.
+      placeholder: Improve onboarding by simplifying the user flow.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is included? What is not included?
+      placeholder: e.g., Include UI changes; exclude backend service logic.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: dependencies
+    attributes:
+      label: Dependencies (if any)
+      options:
+        - label: Dependency 1
+        - label: Dependency 2
+        - label: Dependency 3
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Add any relevant links, context, or details.
+    validations:
+      required: false
