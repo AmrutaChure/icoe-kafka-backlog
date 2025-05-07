@@ -1,7 +1,6 @@
 ---
 name: Feature_Template
 about: Create a new Feature item
-labels: [feature]
 ---
 
 ## 🚀 Feature Title
