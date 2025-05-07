@@ -1,6 +1,5 @@
 name: Feature
-description: Create a new Feature item
-title: Feature Request
+description: Create a new Feature ite
 labels:
   - feature
 assignees: []
