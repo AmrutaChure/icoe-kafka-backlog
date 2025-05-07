@@ -1,0 +1,36 @@
+name: OKR
+description: Create a new Objective & Key Results item
+labels:
+  - 🎯 OKR
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # 🎯 Objective
+        Enter objective details here.
+
+        ## ✅ Key Results
+        - [ ] Key result 1
+        - [ ] Key result 2
+        - [ ] Key result 3
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: "Enter the objective details here."
+      placeholder: "e.g., Improve product performance"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: key_results
+    attributes:
+      label: Key Results
+      options:
+        - label: "Key result 1"
+        - label: "Key result 2"
+        - label: "Key result 3"
+    validations:
+      required: true
