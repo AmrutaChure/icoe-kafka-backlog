@@ -1,7 +1,7 @@
 name: Feature
 description: Use this to create a new feature request.
 title: "[Feature]: "
-labels: [feature]
+labels: 🚀 Feature
 assignees: []
 body:
   - type: markdown
