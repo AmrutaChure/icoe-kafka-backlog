@@ -1,0 +1,7 @@
+blank_issues_enabled: false
+issue_templates:
+    - name: Feature
+      description: Use this to create a new feature request.
+      title: "[Feature]: "
+      labels: ["feature"]
+      template: feature-template.md
