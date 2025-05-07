@@ -1,22 +1,20 @@
 name: Feature
-description: Use this to create a new feature request.
+description: Create a new Feature item
 title: "[Feature]: "
-labels: 🚀 Feature
+labels: ["feature"]
 assignees: []
 body:
   - type: markdown
     attributes:
       value: |
-        ## 🚀 Feature Request Template
-
-        Fill out the sections below to help us understand your request.
+        ## 🚀 Feature Title
 
   - type: textarea
     id: objective
     attributes:
       label: Objective
       description: Briefly describe the value of this feature.
-      placeholder: Improve onboarding by simplifying the user flow.
+      placeholder: e.g., "Allow users to filter products by category"
     validations:
       required: true
 
@@ -24,8 +22,8 @@ body:
     id: scope
     attributes:
       label: Scope
-      description: What is included? What is not included?
-      placeholder: e.g., Include UI changes; exclude backend service logic.
+      description: What is included? What is not?
+      placeholder: In scope: UI component; Out of scope: backend API
     validations:
       required: false
 
@@ -44,6 +42,7 @@ body:
     id: notes
     attributes:
       label: Additional Notes
-      description: Add any relevant links, context, or details.
+      description: Any relevant details, context, or links.
+      placeholder: e.g., Related ticket: #123, Design mockup URL, etc.
     validations:
       required: false
