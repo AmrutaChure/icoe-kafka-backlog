@@ -1,9 +1,9 @@
 name: Feature
 description: Create a new Feature item
+title: Feature Request
 labels:
   - feature
 assignees: []
-title: "Feature Request"
 
 body:
   - type: markdown
@@ -17,8 +17,8 @@ body:
     id: objective
     attributes:
       label: Objective
-      description: Briefly describe the value of this feature.
-      placeholder: e.g., Allow users to filter products by category.
+      description: "Briefly describe the value of this feature."
+      placeholder: "e.g., Allow users to filter products by category."
     validations:
       required: true
 
@@ -26,8 +26,8 @@ body:
     id: scope
     attributes:
       label: Scope
-      description: What is included? What is not?
-      placeholder: e.g., In scope: UI filters; Out of scope: backend APIs.
+      description: "What is included? What is not?"
+      placeholder: "e.g., In scope: UI filters; Out of scope: backend APIs."
     validations:
       required: false
 
@@ -36,13 +36,4 @@ body:
     attributes:
       label: Dependencies (if any)
       options:
-        - label: Dependency 1
-        - label: Dependency 2
-        - label: Dependency 3
-
-  - type: textarea
-    id: notes
-    attributes:
-      label: Additional Notes
-      description: Any relevant details, context, or links.
-      placeholder: e.g., Related issues, designs, documents, etc.
+        - label: "Dependency 1"
