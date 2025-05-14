@@ -7,7 +7,7 @@ Welcome to the **Kafka Platform Team’s Board**! This is central place for plan
 ## 📋 Quarterly Planning Structure
 
 We follow a **Quarterly Cadence**:
-- 📋 **Each year** is broken down into **quarters** (e.g., `QC_25w10`, `QC_25w22`, `QC_25w37`, `QC_25w49`).
+- Each year is broken down into **quarters** (e.g., `QC_25w10`, `QC_25w22`, `QC_25w37`, `QC_25w49`).
 - Each **quarter** contains **six 2-week sprints**.
 - Sprint naming format:
 
@@ -66,7 +66,7 @@ To submit a new request:
    - Feature Request
    - Story/Task Request
 4. Fill in the required information
-5. Optinally link to right repository
+5. Optionally link to right repository
 6. Submit the issue
 
 ## 🔗 Important Resources
@@ -77,22 +77,22 @@ To submit a new request:
 ## 📋 Board Views & Navigation
 
 
-### 🔹 Backlog View
+### Backlog View
 - 📌 List of all potential work.
 - ➕ Add new items at the bottom of the list.
 - 🏷 Label items as `Epic`, `Feature`, `Story`, or `Task`.
 - 🧩 Apply **Status** and **Roadmap Priority**.
 
-### 🔹 OKR View
-- 🎯 Focused view of quarterly objectives.Track key deliverables and their current state.
+### OKR View
+- 🎯 Focused view of quarterly objectives.
 
-### 🔹 Feature View
-- 📊 View features sorted by roadmap priority:
+### Feature View
+- 🚀 View features sorted by roadmap priority:
 
-### 🔹 Team View
+### Team View
 - 👥 Filter by **Assignee**.View all tasks owned by each team member.
 
-### 🔹 Daily Standup View
+### Daily Standup View
 - 🧭 Meant for daily check-ins.
 ---
 
