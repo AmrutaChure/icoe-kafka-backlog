@@ -10,13 +10,6 @@ body:
        
         Fill in the details for this task.
 
-  - type: input
-    id: title
-    attributes:
-      label: Task Title
-      description: "Short, descriptive title for the task."
-    validations:
-      required: true
 
   - type: textarea
     id: task_list
