@@ -1,0 +1,32 @@
+name: Task
+description: Create a new Task
+labels:
+  - 📝 Task
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📝 Task Title
+
+        Fill in the details for this task.
+
+  - type: input
+    id: title
+    attributes:
+      label: Task Title
+      description: "Short, descriptive title for the task."
+    validations:
+      required: true
+
+  - type: textarea
+    id: task_list
+    attributes:
+      label: Task List (Optional)
+      description: "Add tasks or subtasks using markdown checkboxes. You can add new items by typing below."
+      placeholder: |
+        - [ ] Task 1
+        - [ ] Task 2
+        - [ ] Task 3
+    validations:
+      required: false
