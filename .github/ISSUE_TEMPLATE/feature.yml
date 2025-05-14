@@ -13,9 +13,9 @@ body:
         Please fill in the details below to describe the new feature.
 
   - type: textarea
-    id: objective
+    id: description
     attributes:
-      label: Objective
+      label: Description
       description: "Briefly describe the value of this feature."
     validations:
       required: true
