@@ -7,8 +7,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        # 🎯 Objective
-        Enter objective details here.
+
+        Enter OKR details here.
 
   - type: textarea
     id: objective
