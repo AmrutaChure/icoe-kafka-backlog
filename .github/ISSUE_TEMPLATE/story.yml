@@ -1,0 +1,28 @@
+name: Story
+description: Create a new Story
+labels:
+  - 📘 Story
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📘 Story Title
+
+        Fill in the details for this user story.
+
+  - type: input
+    id: title
+    attributes:
+      label: Story Title
+      description: "Short, descriptive title for the story."
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: "A brief description of the user story and what it’s intended to achieve."
+    validations:
+      required: true
