@@ -32,8 +32,8 @@ body:
     id: dependencies
     attributes:
       label: Dependencies (Editable)
-      description: |
-         Dependencies (if any)
+      description: Dependencies (if any)
+         
       options:
         - label: "[ ] Dependency 1 (edit me)"
         - label: "[ ] Dependency 2 (edit me)"
