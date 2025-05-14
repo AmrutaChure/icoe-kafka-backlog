@@ -8,8 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## 🚀 Feature Request
-
+        
         Please fill in the details below to describe the new feature.
 
   - type: textarea
