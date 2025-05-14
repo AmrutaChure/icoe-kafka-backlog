@@ -34,6 +34,5 @@ body:
       label: Dependencies (Optional)
       description: |
         Add any relevant dependencies.
-        
     validations:
       required: false
