@@ -24,7 +24,5 @@ body:
     attributes:
       label: Task List (Optional)
       description: "Add tasks or subtasks using markdown checkboxes. You can add new items by typing below."
-      placeholder: |
-       
     validations:
       required: false
