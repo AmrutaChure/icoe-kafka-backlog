@@ -9,13 +9,7 @@ body:
       value: |
          Fill in the details for this user story.
 
-  - type: input
-    id: title
-    attributes:
-      label: Story Title
-      description: "Short, descriptive title for the story."
-    validations:
-      required: true
+
 
   - type: textarea
     id: description
