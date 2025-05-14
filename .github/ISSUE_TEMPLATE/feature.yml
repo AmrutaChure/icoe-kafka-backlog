@@ -28,12 +28,18 @@ body:
     validations:
       required: false
 
-  - type: checkboxes
+  - type: textarea
     id: dependencies
     attributes:
-      label: Dependencies (Editable)
-      description: Dependencies (if any)
-      options:
-        - label: Dependency 1 (edit me)
-        - label: Dependency 2 (edit me)
-        - label: Dependency 3 (edit me)
+      label: Dependencies (Optional)
+      description: |
+        Add any relevant dependencies using markdown checkboxes (optional).
+        Example:
+        - [ ] Backend API (#123)
+        - [ ] UX design finalized
+      placeholder: |
+        - [ ] Backend API (#123)
+        - [ ] UX design finalized
+        - [ ] External approval
+    validations:
+      required: false
