@@ -28,9 +28,13 @@ body:
     validations:
       required: false
 
-  - type: checkboxes
+   - type: checkboxes
     id: dependencies
     attributes:
-      label: Dependencies (if any)
+      label: Dependencies (Editable)
+      description: |
+         Dependencies (if any)
       options:
-        - label: "Dependency 1"
+        - label: "[ ] Dependency 1 (edit me)"
+        - label: "[ ] Dependency 2 (edit me)"
+        - label: "[ ] Dependency 3 (edit me)"
