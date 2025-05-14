@@ -33,13 +33,7 @@ body:
     attributes:
       label: Dependencies (Optional)
       description: |
-        Add any relevant dependencies using markdown checkboxes (optional).
-        Example:
-        - [ ] Backend API (#123)
-        - [ ] UX design finalized
-      placeholder: |
-        - [ ] Backend API (#123)
-        - [ ] UX design finalized
-        - [ ] External approval
+        Add any relevant dependencies.
+        
     validations:
       required: false
