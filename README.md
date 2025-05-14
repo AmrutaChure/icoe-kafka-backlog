@@ -4,28 +4,27 @@ Welcome to the **Kafka Platform Team’s Board**! This is central place for plan
 
 ---
 
-## 📅 Quarterly Planning Structure
+## 📋 Quarterly Planning Structure
 
 We follow a **Quarterly Cadence**:
-- 📆 **Each year** is broken down into **quarters** (e.g., `QC_25w10`, `QC_25w22`, `QC_25w37`, `QC_25w49`).
+- 📋 **Each year** is broken down into **quarters** (e.g., `QC_25w10`, `QC_25w22`, `QC_25w37`, `QC_25w49`).
 - Each **quarter** contains **six 2-week sprints**.
 - Sprint naming format:
 
 ```
-QC_25w10.01 | 10/03 → 21/03
-QC_25w10.02 | 10/03 → 21/03
-QC_25w10.03 | 10/03 → 21/03
-QC_25w10.04 | 10/03 → 21/03
-QC_25w10.05 | 10/03 → 21/03
-QC_25w10.06 | 10/03 → 21/03
+25w10.01 | 10/03 → 21/03
+25w10.02 | 10/03 → 21/03
+25w10.03 | 10/03 → 21/03
+25w10.04 | 10/03 → 21/03
+25w10.05 | 10/03 → 21/03
+25w10.06 | 10/03 → 21/03
 
 ```
-
-
-
 ---
 
-## 🔄 Work Item Lifecycle (Status Labels)
+## 🔄 Work management process & Work Item Lifecycle (Status Labels)
+
+We follow a Kanban approach to manage our workload, with the following workflow:
 
 
 | Status            | Meaning                                                              |
@@ -56,21 +55,24 @@ We categorize roadmap items using **Priority Tags**:
 | 📦 `Delivered`            | Completed in a previous roadmap cycle                                    |
 
 ---
+## 📝 How to Submit a Request
 
-## 📌 Sprint Naming Convention
+To submit a new request:
 
-Each sprint follows the format:
+1. Navigate to the **Issues** tab
+2. Click **New Issue**
+3. Select the appropriate template:
+   - OKR Request
+   - Feature Request
+   - Story/Task Request
+4. Fill in the required information
+5. Optinally link to right repository
+6. Submit the issue
 
-```
-QC_<YY>w<WW>.<SprintNumber> | <StartDate> – <EndDate>
-```
+## 🔗 Important Resources
 
-For example:
-```
-QC_25w10.01 | 10/03 → 21/03
-```
+- [Kafka Platform Documentation]-
 
----
 
 ## 📋 Board Views & Navigation
 
@@ -94,4 +96,14 @@ QC_25w10.01 | 10/03 → 21/03
 - 🧭 Meant for daily check-ins.
 ---
 
+## 📅 Team Collaboration & Regular Meetings
+
+We maintain regular touchpoints to ensure effective collaboration and continuous improvement:
+
+- **Daily Standup**: Every weekday -  Status updates and blockers discussion
+- **Planning**: Biweekly on Mondays - Setting priorities and planning upcoming work
+- **Backlog Refinement**: Biweekly on Wednesdays - Grooming and prioritizing our backlog
+- **Weekly Lab**: Biweekly on Wednesdays - Technical exploration and knowledge sharing
+- **Show and Tell**: As required - Demonstrations of completed work and new capabilities
+- **Fika**: Every Friday - Team socializing
 
