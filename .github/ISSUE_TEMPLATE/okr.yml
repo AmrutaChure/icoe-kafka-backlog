@@ -8,7 +8,7 @@ body:
     attributes:
       value: |
 
-        Enter OKR details here.
+        Enter OKR title here.
 
   - type: textarea
     id: objective
