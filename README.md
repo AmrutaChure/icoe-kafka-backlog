@@ -1,6 +1,6 @@
 # Kafka Platform Team – Planning Board
 
-Welcome to the **Kafka Platform Team’s Board**! This is central place for planning, tracking, and delivering work using a **Quarterly Planning**. Here you'll find how we organize OKR, features, sprints, track progress, prioritize roadmap items, and use board views effectively.
+Welcome to the Kafka Platform Team’s Board! This is central place for planning, tracking, and delivering work using a **Quarterly Planning**. Here you'll find how we organize OKR, features, sprints, track progress, prioritize roadmap items, and use board views effectively.
 
 ---
 
@@ -24,7 +24,7 @@ We follow a **Quarterly Cadence**:
 
 ## 🔄 Work management process & Work Item Lifecycle (Status Labels)
 
-We follow a Kanban approach to manage our workload, with the following workflow:
+We follow a **Kanban** approach to manage our workload, with the following workflow:
 
 
 | Status            | Meaning                                                              |
@@ -71,7 +71,7 @@ To submit a new request:
 
 ## 🔗 Important Resources
 
-- [Kafka Platform Documentation]-
+- Kafka Platform Documentation-
 
 
 ## 📋 Board Views & Navigation
