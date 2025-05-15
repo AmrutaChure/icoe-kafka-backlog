@@ -7,8 +7,8 @@ body:
   - type: markdown
     attributes:
       value: |
-
-        Enter OKR title here.
+        ## 🎯 OKR Title
+        Add a concise title for the OKR.
 
   - type: textarea
     id: objective
@@ -23,6 +23,7 @@ body:
     attributes:
       label: Key Results (Optional)
       description: |
-        Enter one key result per line using markdown checkboxes if desired.
+        Enter one key result per line. You can use markdown checkboxes:
+        - [ ] Example key result
     validations:
       required: false
