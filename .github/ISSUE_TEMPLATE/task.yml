@@ -7,9 +7,8 @@ body:
   - type: markdown
     attributes:
       value: |
-       
-        Fill in the details for this task.
-
+        ## 🔧 Task Title
+        Add a concise title for the Task.
 
   - type: textarea
     id: task_list
