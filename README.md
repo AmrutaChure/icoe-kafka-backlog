@@ -100,7 +100,7 @@ To submit a new request:
 
 We maintain regular touchpoints to ensure effective collaboration and continuous improvement:
 
-- **Daily Standup**: Every weekday -  Status updates and blockers discussion
+- **Daily Sync**: Every weekday -  Status updates and blockers discussion
 - **Planning**: Biweekly on Mondays - Setting priorities and planning upcoming work
 - **Backlog Refinement**: Biweekly on Wednesdays - Grooming and prioritizing our backlog
 - **Weekly Lab**: Biweekly on Wednesdays - Technical exploration and knowledge sharing
