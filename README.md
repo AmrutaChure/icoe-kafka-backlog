@@ -76,18 +76,15 @@ To submit a new request:
 
 ## 📋 Board Views & Navigation
 
-
 ### Backlog View
 - 📌 List of all potential work.
 - ➕ Add new items at the bottom of the list.
-- 🏷 Label items as `Epic`, `Feature`, `Story`, or `Task`.
-- 🧩 Apply **Status** and **Roadmap Priority**.
 
 ### OKR View
 - 🎯 Focused view of quarterly objectives.
 
 ### Feature View
-- 🚀 View features sorted by roadmap priority:
+- 🚀 View features sorted by roadmap priority.
 
 ### Team View
 - 👥 Filter by **Assignee**.View all tasks owned by each team member.
