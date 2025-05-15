@@ -8,16 +8,16 @@ Welcome to the **Kafka Platform Team’s Board**! This is central place for plan
 
 We follow a **Quarterly Cadence**:
 - Each year is broken down into **quarters** (e.g., `QC_25w10`, `QC_25w22`, `QC_25w37`, `QC_25w49`).
-- Each **quarter** contains **six 2-week sprints**.
+- Each **quarter** contains **six 2-week iterations**.
 - Sprint naming format:
 
 ```
-25w10.01 | 10/03 → 21/03
-25w10.02 | 10/03 → 21/03
-25w10.03 | 10/03 → 21/03
-25w10.04 | 10/03 → 21/03
-25w10.05 | 10/03 → 21/03
-25w10.06 | 10/03 → 21/03
+25w10.01 | 10/03 → 23/03
+25w10.02 | 24/03 → 06/04
+25w10.03 | 07/04 → 20/04
+25w10.04 | 21/04 → 04/05
+25w10.05 | 05/05 → 18/05
+25w10.06 | 19/05 → 01/06
 
 ```
 ---
