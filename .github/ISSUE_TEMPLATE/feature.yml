@@ -2,6 +2,7 @@ name: Feature
 description: Create a new Feature item
 labels:
   - 🚀 Feature
+  - 🆕 New
 assignees: []
 
 body:
