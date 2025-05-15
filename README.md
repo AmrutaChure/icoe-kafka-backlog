@@ -9,7 +9,7 @@ Welcome to the Kafka Platform Team’s Board! This is central place for planning
 We follow a **Quarterly Cadence**:
 - Each year is broken down into **quarters** (e.g., `QC_25w10`, `QC_25w22`, `QC_25w37`, `QC_25w49`).
 - Each **quarter** contains **six 2-week iterations**.
-- Sprint naming format:
+- **Iteration** naming format:
 
 ```
 25w10.01 | 10/03 → 23/03
@@ -76,21 +76,14 @@ To submit a new request:
 
 ## 📋 Board Views & Navigation
 
-### Backlog View
-- 📌 List of all potential work.
-- ➕ Add new items at the bottom of the list.
+| **View**               | **Description**                                        |
+|------------------------|--------------------------------------------------------|
+| **Backlog View**        | 📌 List of all potential work. <br> ➕ Add new items at the bottom of the list. |
+| **OKR View**            | 🎯 Focused view of quarterly objectives.              |
+| **Feature View**        | 🚀 View features sorted by roadmap priority.          |
+| **Team View**           | 👥 Filter by **Assignee**. View all tasks owned by each team member. |
+| **Daily Standup View**  | 🧭 Meant for daily check-ins.                          |
 
-### OKR View
-- 🎯 Focused view of quarterly objectives.
-
-### Feature View
-- 🚀 View features sorted by roadmap priority.
-
-### Team View
-- 👥 Filter by **Assignee**.View all tasks owned by each team member.
-
-### Daily Standup View
-- 🧭 Meant for daily check-ins.
 ---
 
 ## 📅 Team Collaboration & Regular Meetings
