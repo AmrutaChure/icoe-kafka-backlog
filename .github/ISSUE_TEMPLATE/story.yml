@@ -7,9 +7,8 @@ body:
   - type: markdown
     attributes:
       value: |
-         Please fill in the details below to describe the story.
-
-
+        ## 📘 Story Title
+        Add a concise title for the Story.
 
   - type: textarea
     id: description
