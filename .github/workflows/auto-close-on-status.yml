@@ -23,17 +23,17 @@ jobs:
             const doneStatusValue = '✅ Done';
 
             async function getProjectId() {
-              const query = `
-                query($org: String!) {
-                  organization(login: $org) {
-                    projectV2(number: ${projectNumber}) {
-                      id
-                    }
-                  }
-                }`;
-              const data = await github.graphql(query, { org });
-              return data.organization.projectV2.id;
-            }
+             const query = `
+  query($user: String!) {
+    user(login: $user) {
+      projectV2(number: ${projectNumber}) {
+        id
+      }
+    }
+  }`;
+const data = await github.graphql(query, { user: org });
+return data.user.projectV2.id;
+
 
             async function getItems(projectId) {
               const items = [];
