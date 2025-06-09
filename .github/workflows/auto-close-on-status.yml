@@ -1,4 +1,4 @@
-name: Auto-close issues when project Status is "Done"
+name: Auto-close issues when project Status is "✅ Done"
 
 on:
   schedule:
@@ -18,22 +18,22 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const org = 'kafkaNchai'; // Replace with your GitHub username
-            const projectNumber = 4;  // Replace with your project number
+            const org = 'your-org-name'; // 🔁 Replace with your actual org login (from the URL)
+            const projectNumber = 4;     // 🔁 Replace with your actual project number
             const statusFieldName = 'Status';
             const doneStatusValue = '✅ Done';
 
             async function getProjectId() {
               const query = `
-                query($user: String!) {
-                  user(login: $user) {
+                query($org: String!) {
+                  organization(login: $org) {
                     projectV2(number: ${projectNumber}) {
                       id
                     }
                   }
                 }`;
-              const data = await github.graphql(query, { user: org });
-              return data.user.projectV2.id;
+              const data = await github.graphql(query, { org });
+              return data.organization.projectV2.id;
             }
 
             async function getItems(projectId) {
