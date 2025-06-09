@@ -20,7 +20,7 @@ jobs:
             const org = 'kafkaNchai'; // <-- Replace this
             const projectNumber = 4; // <-- Replace this
             const statusFieldName = 'Status';
-            const doneStatusValue = 'Done';
+            const doneStatusValue = '✅ Done';
 
             async function getProjectId() {
               const query = `
