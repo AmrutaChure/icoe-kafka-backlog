@@ -1,7 +1,7 @@
 name: Check Required Issue Labels
 on:
   issues:
-    types: [opened, labeled, unlabeled, edited]
+    types: [open, labeled, unlabeled, edited]
 
 jobs:
   check-labels:
