@@ -1,0 +1,42 @@
+name: Check Required Issue Labels
+on:
+  issues:
+    types: [opened, labeled, unlabeled, edited]
+
+jobs:
+  check-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for required labels
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // Define your mandatory label categories
+            const requiredLabelCategories = {
+              'Priority': ['High', 'Medium', 'Low'],  // Must have one of these
+              'Status': ['🆕 New', '🧠 Backlog', '🚧 In Progress'], // Must have one priority
+            };
+            
+            const issueLabels = context.payload.issue.labels.map(label => label.name);
+            const missingCategories = [];
+            
+            // Check each required category
+            for (const [category, validLabels] of Object.entries(requiredLabelCategories)) {
+              const hasLabel = validLabels.some(label => issueLabels.includes(label));
+              if (!hasLabel) {
+                missingCategories.push(`${category} (${validLabels.join(', ')})`);
+              }
+            }
+            
+            if (missingCategories.length > 0) {
+              const comment = `⚠️ **Missing Required Labels**\n\nThis issue is missing labels from these categories:\n${missingCategories.map(cat => `- ${cat}`).join('\n')}\n\nPlease add the appropriate labels before proceeding.`;
+              
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+              
+              core.setFailed(`Missing required labels: ${missingCategories.join(', ')}`);
+            }
