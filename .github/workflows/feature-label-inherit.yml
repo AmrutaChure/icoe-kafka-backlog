@@ -2,7 +2,10 @@ name: Inherit Labels from Feature to Sub-Issues
 
 on:
   issues:
-    types: [labeled, opened, edited]
+    types:
+      - labeled
+      - opened
+      - edited
 
 jobs:
   propagate-labels:
@@ -17,16 +20,17 @@ jobs:
               issue_number: context.issue.number
             });
 
-            // Only run if this issue is labeled as 'feature'
-            const featureLabel = 'feature';
-            const hasFeatureLabel = issue.data.labels.some(l => l.name.toLowerCase() === featureLabel);
+            // Only run if issue has your custom labels
+            const customLabels = ['Feature', 'Epic']; // your labels
+            const issueLabels = issue.data.labels.map(l => l.name);
+            const hasCustomLabel = issueLabels.some(l => customLabels.includes(l));
 
-            if (!hasFeatureLabel) {
-              console.log('Not a feature issue, skipping...');
+            if (!hasCustomLabel) {
+              console.log('No relevant custom label, skipping...');
               return;
             }
 
-            // Find sub-issue numbers referenced in body (#123)
+            // Find sub-issue numbers in body (#123)
             const regex = /#(\d+)/g;
             const subIssueNumbers = [...issue.data.body.matchAll(regex)].map(m => parseInt(m[1]));
 
@@ -37,7 +41,6 @@ jobs:
 
             console.log('Sub-issues found:', subIssueNumbers);
 
-            // Get all labels from parent issue
             const parentLabels = issue.data.labels.map(l => l.name);
 
             for (const subNumber of subIssueNumbers) {
