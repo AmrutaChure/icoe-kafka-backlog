@@ -1,0 +1,51 @@
+name: Inherit Labels from Feature to Sub-Issues
+
+on:
+  issues:
+    types: [labeled, opened, edited]
+
+jobs:
+  propagate-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            // Only run if this issue is labeled as 'feature'
+            const featureLabel = 'feature';
+            const hasFeatureLabel = issue.data.labels.some(l => l.name.toLowerCase() === featureLabel);
+
+            if (!hasFeatureLabel) {
+              console.log('Not a feature issue, skipping...');
+              return;
+            }
+
+            // Find sub-issue numbers referenced in body (#123)
+            const regex = /#(\d+)/g;
+            const subIssueNumbers = [...issue.data.body.matchAll(regex)].map(m => parseInt(m[1]));
+
+            if (subIssueNumbers.length === 0) {
+              console.log('No sub-issues found.');
+              return;
+            }
+
+            console.log('Sub-issues found:', subIssueNumbers);
+
+            // Get all labels from parent issue
+            const parentLabels = issue.data.labels.map(l => l.name);
+
+            for (const subNumber of subIssueNumbers) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: subNumber,
+                labels: parentLabels
+              });
+              console.log(`Added labels to #${subNumber}`);
+            }
