@@ -1,0 +1,17 @@
+name: Inherit Labels from Feature to Sub-Issues
+
+on:
+  issues:
+    types:
+      - labeled
+      - opened
+      - edited
+
+jobs:
+  propagate-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            console.log("Hello, workflow is running!");
