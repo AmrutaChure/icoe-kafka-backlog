@@ -1,0 +1,33 @@
+name: Inherit labels to sub-issues (feature-only)
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled]
+
+permissions:
+  issues: write
+
+jobs:
+  inherit-labels:
+    name: Inherit labels to sub-issues (feature-only)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run label inheritance script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: set to a regex to match which labels to copy.
+          # Default copies all labels. Example to copy "priority:*" labels:
+          # LABELS_REGEX: '^priority:.*'
+          LABELS_REGEX: '^(.+)$'
+        run: node scripts/inherit-labels.js
