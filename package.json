@@ -1,0 +1,14 @@
+{
+  "name": "github-inherit-issue-labels",
+  "version": "1.0.0",
+  "description": "Copy labels from a main issue (labeled 'feature') to referenced sub-issues",
+  "main": "scripts/inherit-labels.js",
+  "scripts": {
+    "start": "node scripts/inherit-labels.js"
+  },
+  "author": "kafkaNchai",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^21.0.0"
+  }
+}
