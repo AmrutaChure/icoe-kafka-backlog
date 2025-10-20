@@ -1,0 +1,132 @@
+{
+  "folders": [
+    {
+      "name": "Kafka Backlog Project",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "github.issues.queries": [
+      {
+        "label": "My Issues",
+        "query": "assignee:@me state:open repo:${owner}/${repository}"
+      },
+      {
+        "label": "Features",
+        "query": "label:feature state:open repo:${owner}/${repository}"
+      },
+      {
+        "label": "Stories in Progress",
+        "query": "label:story label:\"in progress\" repo:${owner}/${repository}"
+      },
+      {
+        "label": "Ready for Sprint",
+        "query": "label:ready repo:${owner}/${repository}"
+      },
+      {
+        "label": "Blocked Items",
+        "query": "label:blocked repo:${owner}/${repository}"
+      }
+    ],
+    "github.issues.createInsertFormat": "number",
+    "github.issues.defaultCreateOptions": {
+      "labels": ["🆕 New"]
+    },
+    "files.associations": {
+      "*.yml": "yaml",
+      "*.yaml": "yaml"
+    },
+    "yaml.schemas": {
+      "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml",
+      "https://json.schemastore.org/github-issue-forms.json": ".github/ISSUE_TEMPLATE/*.yml"
+    },
+    "workbench.colorCustomizations": {
+      "statusBar.background": "#1f4788",
+      "statusBar.foreground": "#ffffff",
+      "activityBar.background": "#2d3748"
+    },
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.profiles.osx": {
+      "zsh": {
+        "path": "zsh",
+        "args": ["-l"]
+      }
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "GitHub.vscode-pull-request-github",
+      "GitHub.vscode-github-actions", 
+      "redhat.vscode-yaml",
+      "ms-vscode.vscode-json",
+      "GitHub.copilot",
+      "GitHub.copilot-chat"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Install Dependencies",
+        "type": "shell",
+        "command": "npm install",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "Run Label Inheritance",
+        "type": "shell", 
+        "command": "npm start",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Setup GitHub CLI",
+        "type": "shell",
+        "command": "gh auth login && gh repo set-default",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always", 
+          "focus": true,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "View Project Board",
+        "type": "shell",
+        "command": "gh project view 1 --owner kafkaNchai --web",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "Daily Standup Report",
+        "type": "shell",
+        "command": "echo '📊 Daily Standup Report' && gh issue list --label 'in progress' && echo '' && gh issue list --label 'in review'",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      }
+    ]
+  }
+}

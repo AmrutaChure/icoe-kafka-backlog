@@ -86,7 +86,13 @@ function exitWith(msg) {
       const sub = await octokit.rest.issues.get({ owner, repo, issue_number: subIssueNumber });
       const subLabels = labelNames(sub.data.labels);
 
-      const merged = Array.from(new Set([...subLabels, ...parentLabels]));
+      // Always add 'Story' label to sub-issues of features
+      const labelsToAdd = [...parentLabels];
+      if (!subLabels.map(l => l.toLowerCase()).includes('story')) {
+        labelsToAdd.push('Story');
+      }
+
+      const merged = Array.from(new Set([...subLabels, ...labelsToAdd]));
 
       // only update if something changed
       const unchanged = merged.length === subLabels.length && merged.every(v => subLabels.includes(v));
@@ -95,14 +101,43 @@ function exitWith(msg) {
         return;
       }
 
-      await octokit.rest.issues.update({
+      // Inherit additional properties from parent
+      const parentData = parent.data;
+      const subData = sub.data;
+      
+      const updateData = {
         owner,
         repo,
         issue_number: subIssueNumber,
         labels: merged
-      });
+      };
 
-      console.log(`Copied labels [${parentLabels.join(', ')}] from #${parentIssueNumber} to #${subIssueNumber}.`);
+      // Inherit assignees if sub-issue has none
+      if (!subData.assignees?.length && parentData.assignees?.length) {
+        updateData.assignees = parentData.assignees.map(a => a.login);
+        console.log(`Inheriting assignees from parent #${parentIssueNumber} to #${subIssueNumber}`);
+      }
+
+      // Inherit milestone if sub-issue has none
+      if (!subData.milestone && parentData.milestone) {
+        updateData.milestone = parentData.milestone.number;
+        console.log(`Inheriting milestone from parent #${parentIssueNumber} to #${subIssueNumber}`);
+      }
+
+      // Add status label if sub-issue doesn't have one
+      const statusLabels = ['new', 'backlog', 'in discovery', 'ready', 'in progress', 'in review', 'done', 'blocked/paused'];
+      const hasStatusLabel = subLabels.some(label => 
+        statusLabels.some(status => label.toLowerCase().includes(status))
+      );
+      
+      if (!hasStatusLabel) {
+        updateData.labels.push('🆕 New');
+        console.log(`Adding default status label to sub-issue #${subIssueNumber}`);
+      }
+
+      await octokit.rest.issues.update(updateData);
+
+      console.log(`Enhanced inheritance: copied labels [${labelsToAdd.join(', ')}] and properties from #${parentIssueNumber} to #${subIssueNumber}.`);
     } catch (err) {
       console.error(`Failed to copy labels from #${parentIssueNumber} to #${subIssueNumber}:`, err.message);
     }

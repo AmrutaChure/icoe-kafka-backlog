@@ -1,0 +1,200 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    // GitHub Integration Settings
+    "githubPullRequests.defaultMergeMethod": "squash",
+    "githubPullRequests.pullBranch": "never",
+    "githubIssues.workingIssueFormatScm": "#${issueNumber}: ${issueTitle}",
+    "githubIssues.ignoreCompletionTrigger": [
+      " "
+    ],
+    "githubIssues.issueCompletions.enabled": true,
+    "githubIssues.queries": [
+      {
+        "label": "My Issues",
+        "query": "is:open assignee:@me"
+      },
+      {
+        "label": "Features",
+        "query": "is:open label:feature"
+      },
+      {
+        "label": "Stories in Progress",
+        "query": "is:open label:story label:\"in progress\""
+      },
+      {
+        "label": "Ready for Review",
+        "query": "is:open label:\"in review\""
+      },
+      {
+        "label": "Blocked Items",
+        "query": "is:open label:\"blocked/paused\""
+      },
+      {
+        "label": "Current Sprint",
+        "query": "is:open milestone:\"Sprint 25w10.01\""
+      },
+      {
+        "label": "High Priority",
+        "query": "is:open label:\"📍 Now\""
+      }
+    ],
+    
+    // GitLens Settings for better collaboration
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.blame.format": "${author}, ${agoOrDate}",
+    "gitlens.currentLine.enabled": false,
+    "gitlens.codeLens.enabled": true,
+    "gitlens.codeLens.authors.enabled": true,
+    "gitlens.codeLens.recentChange.enabled": true,
+    
+    // Editor settings for better markdown editing
+    "markdown.preview.enhanced.enableWikiLinkSyntax": true,
+    "markdown.preview.enhanced.wikiLinkFileExtension": ".md",
+    "[markdown]": {
+      "editor.wordWrap": "on",
+      "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+      },
+      "editor.rulers": [80],
+      "editor.tabSize": 2
+    },
+    
+    // Terminal settings
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.profiles.osx": {
+      "zsh": {
+        "path": "/bin/zsh",
+        "args": ["-l"]
+      }
+    },
+    
+    // File associations
+    "files.associations": {
+      "*.yml": "yaml",
+      "*.yaml": "yaml",
+      ".github/workflows/*.yml": "github-actions",
+      ".github/ISSUE_TEMPLATE/*.yml": "yaml"
+    },
+    
+    // Search settings
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/.git": true,
+      "**/dist": true,
+      "**/build": true
+    },
+    
+    // Auto-save settings for better collaboration
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    
+    // Theme settings
+    "workbench.colorTheme": "GitHub Dark",
+    "workbench.iconTheme": "vs-seti"
+  },
+  "extensions": {
+    "recommendations": [
+      "github.vscode-pull-request-github",
+      "github.copilot",
+      "github.github-vscode-theme",
+      "github.remotehub",
+      "eamodio.gitlens",
+      "ms-vscode.vscode-json",
+      "redhat.vscode-yaml",
+      "davidanson.vscode-markdownlint",
+      "yzhang.markdown-all-in-one",
+      "bierner.markdown-mermaid",
+      "streetsidesoftware.code-spell-checker"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Setup GitHub CLI",
+        "type": "shell",
+        "command": "gh auth login && gh repo set-default kafkaNchai/icoe-kafka-backlog",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Daily Standup Report",
+        "type": "shell",
+        "command": "echo '📊 Daily Standup Report - '$(date) && echo '======================================' && echo '🚧 In Progress:' && gh issue list --label 'in progress' && echo '' && echo '🔁 In Review:' && gh issue list --label 'in review' && echo '' && echo '✅ Recently Completed:' && gh issue list --search 'is:closed closed:>'$(date -d '1 day ago' '+%Y-%m-%d')",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Create Feature Issue",
+        "type": "shell",
+        "command": "gh issue create --template feature-request.yml --web",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Create Story Issue",
+        "type": "shell",
+        "command": "gh issue create --template story-task.yml --web",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "View Project Board",
+        "type": "shell",
+        "command": "gh project view 1 --owner kafkaNchai --web",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Run Label Inheritance",
+        "type": "shell",
+        "command": "npm start",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
+}

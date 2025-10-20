@@ -1,0 +1,142 @@
+name: Issue Automation & Label Inheritance
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled]
+  issue_comment:
+    types: [created]
+
+jobs:
+  inherit-labels:
+    name: Inherit Labels from Feature to Sub-issues
+    runs-on: ubuntu-latest
+    if: github.event.issue
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run label inheritance script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          LABELS_REGEX: '^(feature|priority|quarter|team|epic)$'
+        run: npm start
+
+  auto-label-stories:
+    name: Auto-label Sub-issues as Stories
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' && github.event.issue
+    steps:
+      - name: Check if issue is referenced by a feature
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            
+            try {
+              // Get timeline to check for cross-references
+              const timeline = await github.request('GET /repos/{owner}/{repo}/issues/{issue_number}/timeline', {
+                owner,
+                repo,
+                issue_number: issueNumber,
+                headers: { accept: 'application/vnd.github.mockingbird-preview+json' }
+              });
+              
+              const hasFeatureParent = timeline.data.some(event => {
+                if (event.event === 'cross-referenced' && event.source?.issue) {
+                  // Check if parent issue has 'feature' label
+                  return event.source.issue.labels?.some(label => 
+                    label.name?.toLowerCase() === 'feature'
+                  );
+                }
+                return false;
+              });
+              
+              if (hasFeatureParent) {
+                // Add 'Story' label to sub-issue
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number: issueNumber,
+                  labels: ['Story']
+                });
+                
+                console.log(`Added 'Story' label to issue #${issueNumber}`);
+              }
+            } catch (error) {
+              console.error('Error in auto-labeling:', error);
+            }
+
+  auto-assign-new-status:
+    name: Auto-assign New status to new issues
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' && github.event.issue
+    steps:
+      - name: Add New label to new issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            
+            // Check if issue already has status labels
+            const currentLabels = context.payload.issue.labels.map(label => label.name.toLowerCase());
+            const statusLabels = ['new', 'backlog', 'in discovery', 'ready', 'in progress', 'in review', 'done', 'blocked/paused'];
+            
+            const hasStatusLabel = statusLabels.some(status => 
+              currentLabels.includes(status)
+            );
+            
+            if (!hasStatusLabel) {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                labels: ['🆕 New']
+              });
+              
+              console.log(`Added '🆕 New' label to issue #${issueNumber}`);
+            }
+
+  auto-assign-priority:
+    name: Auto-assign default priority to features
+    runs-on: ubuntu-latest
+    if: github.event.action == 'labeled' && contains(github.event.label.name, 'feature')
+    steps:
+      - name: Add default priority to features
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            
+            // Check if issue already has priority labels
+            const currentLabels = context.payload.issue.labels.map(label => label.name.toLowerCase());
+            const priorityLabels = ['now', 'near term', 'later', 'future', 'no roadmap priority', 'delivered'];
+            
+            const hasPriorityLabel = priorityLabels.some(priority => 
+              currentLabels.some(label => label.includes(priority))
+            );
+            
+            if (!hasPriorityLabel) {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                labels: ['❓ No Roadmap Priority']
+              });
+              
+              console.log(`Added default priority label to feature #${issueNumber}`);
+            }

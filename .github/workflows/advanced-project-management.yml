@@ -1,0 +1,255 @@
+name: Advanced Project Board Management
+
+on:
+  issues:
+    types: [opened, closed, labeled, unlabeled, assigned, unassigned]
+  issue_comment:
+    types: [created]
+  pull_request:
+    types: [opened, closed, merged, review_requested]
+
+jobs:
+  manage-project-items:
+    name: Advanced Project Board Management
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add to Project Board
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/kafkaNchai/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Project Item Status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue?.number || context.payload.pull_request?.number;
+            
+            if (!issueNumber) return;
+            
+            const item = context.payload.issue || context.payload.pull_request;
+            const labels = item.labels?.map(label => label.name.toLowerCase()) || [];
+            const action = context.payload.action;
+            
+            console.log(`Processing ${action} for issue #${issueNumber} with labels: ${labels.join(', ')}`);
+            
+            // Auto-update project status based on labels
+            let projectStatus = null;
+            
+            if (labels.some(l => l.includes('new'))) projectStatus = 'New';
+            else if (labels.some(l => l.includes('backlog'))) projectStatus = 'Backlog';
+            else if (labels.some(l => l.includes('discovery'))) projectStatus = 'In Discovery';
+            else if (labels.some(l => l.includes('ready'))) projectStatus = 'Ready';
+            else if (labels.some(l => l.includes('progress'))) projectStatus = 'In Progress';
+            else if (labels.some(l => l.includes('review'))) projectStatus = 'In Review';
+            else if (labels.some(l => l.includes('done')) || action === 'closed') projectStatus = 'Done';
+            else if (labels.some(l => l.includes('blocked') || l.includes('paused'))) projectStatus = 'Blocked/Paused';
+            
+            if (projectStatus) {
+              console.log(`Would update project status to: ${projectStatus}`);
+              // Note: Actual GraphQL API call to update project item would go here
+              // This requires the project item ID which can be obtained via GraphQL
+            }
+
+  epic-management:
+    name: Epic and Feature Management
+    runs-on: ubuntu-latest
+    if: github.event.action == 'labeled' && contains(github.event.label.name, 'epic')
+    steps:
+      - name: Setup Epic Tracking
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            
+            // Create epic tracking comment
+            const epicTrackingComment = `
+            ## 🎯 Epic Tracking
+            
+            This issue has been marked as an **Epic**. Use this section to track progress:
+            
+            ### 📊 Progress Overview
+            - **Total Features**: 0
+            - **Completed**: 0
+            - **In Progress**: 0
+            - **Blocked**: 0
+            
+            ### 🚀 Related Features
+            <!-- Link related features here using #issue_number -->
+            
+            ### 📈 Metrics
+            - **Story Points**: TBD
+            - **Target Quarter**: TBD
+            - **Current Status**: Planning
+            
+            ---
+            *This comment is automatically maintained. Edit the features list above to track epic progress.*
+            `;
+            
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              body: epicTrackingComment
+            });
+            
+            console.log(`Created epic tracking comment for issue #${issueNumber}`);
+
+  sprint-management:
+    name: Sprint and Iteration Management
+    runs-on: ubuntu-latest
+    if: github.event.action == 'labeled'
+    steps:
+      - name: Manage Sprint Assignment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            const labelName = context.payload.label?.name;
+            
+            // Check if label is an iteration label (format: 25w10.01, etc.)
+            const iterationMatch = labelName?.match(/(\d{2}w\d{2})\.(\d{2})/);
+            if (!iterationMatch) return;
+            
+            const [, quarter, iteration] = iterationMatch;
+            const sprintName = `Sprint ${quarter}.${iteration}`;
+            
+            try {
+              // Try to find or create milestone for this sprint
+              const milestones = await github.rest.issues.listMilestones({
+                owner,
+                repo,
+                state: 'open'
+              });
+              
+              let milestone = milestones.data.find(m => m.title === sprintName);
+              
+              if (!milestone) {
+                // Calculate sprint dates (2-week iterations)
+                const year = 2000 + parseInt(quarter.slice(0, 2));
+                const weekNum = parseInt(quarter.slice(3));
+                const iterationNum = parseInt(iteration);
+                
+                // Approximate start date calculation
+                const startDate = new Date(year, 0, 1 + (weekNum - 1) * 7 + (iterationNum - 1) * 14);
+                const endDate = new Date(startDate.getTime() + 13 * 24 * 60 * 60 * 1000);
+                
+                const created = await github.rest.issues.createMilestone({
+                  owner,
+                  repo,
+                  title: sprintName,
+                  description: `Sprint ${quarter}.${iteration} - Iteration ${iteration} of Quarter ${quarter}`,
+                  due_on: endDate.toISOString()
+                });
+                milestone = created.data;
+              }
+              
+              // Assign issue to milestone
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                milestone: milestone.number
+              });
+              
+              console.log(`Assigned issue #${issueNumber} to ${sprintName}`);
+            } catch (error) {
+              console.error('Error managing sprint assignment:', error);
+            }
+
+  dependency-tracking:
+    name: Track Dependencies
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' || github.event.action == 'edited'
+    steps:
+      - name: Parse and Track Dependencies
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            const body = context.payload.issue.body || '';
+            
+            // Parse dependencies from issue body
+            const dependsOnRegex = /depends on:?\s*#(\d+)/gi;
+            const blockedByRegex = /blocked by:?\s*#(\d+)/gi;
+            
+            const dependencies = [];
+            const blockers = [];
+            
+            let match;
+            while ((match = dependsOnRegex.exec(body)) !== null) {
+              dependencies.push(parseInt(match[1]));
+            }
+            
+            while ((match = blockedByRegex.exec(body)) !== null) {
+              blockers.push(parseInt(match[1]));
+            }
+            
+            if (dependencies.length > 0 || blockers.length > 0) {
+              const dependencyComment = `
+              ## 🔗 Dependencies Detected
+              
+              ${dependencies.length > 0 ? `
+              **Depends on:**
+              ${dependencies.map(dep => `- #${dep}`).join('\n')}
+              ` : ''}
+              
+              ${blockers.length > 0 ? `
+              **Blocked by:**
+              ${blockers.map(blocker => `- #${blocker}`).join('\n')}
+              ` : ''}
+              
+              ---
+              *This comment is automatically generated based on issue description.*
+              `;
+              
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                body: dependencyComment
+              });
+              
+              console.log(`Tracked dependencies for issue #${issueNumber}`);
+            }
+
+  progress-reporting:
+    name: Generate Progress Reports
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed' || (github.event.action == 'labeled' && contains(github.event.label.name, 'done'))
+    steps:
+      - name: Update Epic Progress
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            
+            // Find parent epic/feature by looking for cross-references
+            try {
+              const timeline = await github.request('GET /repos/{owner}/{repo}/issues/{issue_number}/timeline', {
+                owner,
+                repo,
+                issue_number: issueNumber,
+                headers: { accept: 'application/vnd.github.mockingbird-preview+json' }
+              });
+              
+              for (const event of timeline.data) {
+                if (event.event === 'cross-referenced' && event.source?.issue) {
+                  const parentIssue = event.source.issue;
+                  const parentLabels = parentIssue.labels?.map(l => l.name.toLowerCase()) || [];
+                  
+                  // If parent is an epic or feature, update its progress
+                  if (parentLabels.includes('epic') || parentLabels.includes('feature')) {
+                    console.log(`Updating progress for parent ${parentIssue.number}`);
+                    // Here you would update the epic tracking comment with new progress
+                  }
+                }
+              }
+            } catch (error) {
+              console.error('Error updating epic progress:', error);
+            }

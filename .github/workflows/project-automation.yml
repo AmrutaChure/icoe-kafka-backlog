@@ -1,0 +1,159 @@
+name: Project Board Automation
+
+on:
+  issues:
+    types: [opened, closed, labeled, unlabeled]
+  pull_request:
+    types: [opened, closed, merged]
+
+jobs:
+  update-project-board:
+    name: Update Project Board Status
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move issues based on labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue?.number || context.payload.pull_request?.number;
+            
+            if (!issueNumber) return;
+            
+            // Get the issue/PR details
+            const item = context.payload.issue || context.payload.pull_request;
+            const labels = item.labels?.map(label => label.name.toLowerCase()) || [];
+            
+            // Define label to status mapping
+            const statusMapping = {
+              '🆕 new': 'New',
+              '🧠 backlog': 'Backlog', 
+              '🔍 in discovery': 'In Discovery',
+              '✅ ready': 'Ready',
+              '🚧 in progress': 'In Progress',
+              '🔁 in review': 'In Review',
+              '✅ done': 'Done',
+              '⏸️ blocked/paused': 'Blocked/Paused'
+            };
+            
+            // Find current status from labels
+            let newStatus = null;
+            for (const [labelName, status] of Object.entries(statusMapping)) {
+              if (labels.some(label => label.includes(labelName.replace(/[🆕🧠🔍✅🚧🔁⏸️]/g, '').trim()))) {
+                newStatus = status;
+                break;
+              }
+            }
+            
+            // Handle closed issues
+            if (context.payload.action === 'closed') {
+              newStatus = 'Done';
+            }
+            
+            if (newStatus) {
+              console.log(`Would move issue #${issueNumber} to ${newStatus} column`);
+              // Note: Actual project board API calls would go here
+              // This requires project board ID and column mapping
+            }
+
+  assign-to-current-quarter:
+    name: Assign Features to Current Quarter
+    runs-on: ubuntu-latest
+    if: github.event.action == 'labeled' && contains(github.event.label.name, 'feature')
+    steps:
+      - name: Get current quarter and assign
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            
+            // Calculate current quarter based on date
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(-2);
+            
+            // Define quarter start weeks (approximate)
+            const quarters = [
+              { label: `QC_${year}w10`, start: new Date(now.getFullYear(), 2, 1) },  // March
+              { label: `QC_${year}w22`, start: new Date(now.getFullYear(), 5, 1) },  // June
+              { label: `QC_${year}w37`, start: new Date(now.getFullYear(), 8, 1) },  // September
+              { label: `QC_${year}w49`, start: new Date(now.getFullYear(), 11, 1) } // December
+            ];
+            
+            // Find current quarter
+            let currentQuarter = quarters[0].label;
+            for (let i = quarters.length - 1; i >= 0; i--) {
+              if (now >= quarters[i].start) {
+                currentQuarter = quarters[i].label;
+                break;
+              }
+            }
+            
+            // Check if feature already has quarter assignment
+            const currentLabels = context.payload.issue.labels.map(label => label.name);
+            const hasQuarterLabel = currentLabels.some(label => label.match(/QC_\d{2}w\d{2}/));
+            
+            if (!hasQuarterLabel) {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                labels: [currentQuarter]
+              });
+              
+              console.log(`Assigned feature #${issueNumber} to quarter ${currentQuarter}`);
+            }
+
+  auto-milestone:
+    name: Auto-assign Milestone based on Quarter
+    runs-on: ubuntu-latest
+    if: github.event.action == 'labeled'
+    steps:
+      - name: Assign milestone based on quarter label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.issue.number;
+            const labelName = context.payload.label?.name;
+            
+            // Check if the added label is a quarter label
+            const quarterMatch = labelName?.match(/QC_(\d{2})w(\d{2})/);
+            if (!quarterMatch) return;
+            
+            const [, year, week] = quarterMatch;
+            const milestoneName = `Quarter ${year}w${week}`;
+            
+            try {
+              // Try to find existing milestone
+              const milestones = await github.rest.issues.listMilestones({
+                owner,
+                repo,
+                state: 'open'
+              });
+              
+              let milestone = milestones.data.find(m => m.title === milestoneName);
+              
+              // Create milestone if it doesn't exist
+              if (!milestone) {
+                const created = await github.rest.issues.createMilestone({
+                  owner,
+                  repo,
+                  title: milestoneName,
+                  description: `Quarterly planning milestone for ${milestoneName}`
+                });
+                milestone = created.data;
+              }
+              
+              // Assign issue to milestone
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                milestone: milestone.number
+              });
+              
+              console.log(`Assigned issue #${issueNumber} to milestone ${milestoneName}`);
+            } catch (error) {
+              console.error('Error managing milestones:', error);
+            }

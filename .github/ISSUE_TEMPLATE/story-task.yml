@@ -1,0 +1,67 @@
+name: 📖 Story/Task
+description: Create a user story or technical task
+title: "[STORY] "
+labels: ["Story", "🆕 New"]
+projects: ["kafkaNchai/1"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📖 Story/Task
+        
+        Use this template to create user stories or technical tasks. If this relates to a feature, reference it using #issue_number.
+
+  - type: input
+    id: story-title
+    attributes:
+      label: Story/Task Title
+      description: Provide a clear, concise title
+      placeholder: "e.g., As a user, I want to view real-time metrics"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What needs to be done?
+      description: Describe the work required
+      placeholder: |
+        As a [user], I want [goal] so that [benefit]
+        
+        OR
+        
+        Technical task: Describe what needs to be built/fixed...
+    validations:
+      required: true
+
+  - type: textarea
+    id: parent-feature
+    attributes:
+      label: Related to which feature?
+      description: Link to parent feature (optional)
+      placeholder: "Related to feature: #123"
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: How do we know it's done?
+      description: What are the completion criteria?
+      placeholder: |
+        - [ ] Thing 1 works
+        - [ ] Thing 2 is complete
+        - [ ] Tests pass
+    validations:
+      required: true
+
+  - type: dropdown
+    id: story-points
+    attributes:
+      label: How complex is this? (optional)
+      description: Rough effort estimate
+      options:
+        - "1 - Very Simple"
+        - "2 - Simple" 
+        - "3 - Medium"
+        - "5 - Complex"
+        - "8 - Very Complex"

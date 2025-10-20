@@ -1,0 +1,54 @@
+name: 🚀 Feature Request
+description: Create a new feature for the roadmap
+title: "[FEATURE] "
+labels: ["feature", "❓ No Roadmap Priority", "🆕 New"]
+projects: ["kafkaNchai/1"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🚀 Feature Request
+        
+        Use this template to create a new feature that will be tracked on the roadmap. Features can have multiple sub-issues (stories) that inherit labels and properties.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What feature do you want?
+      description: Describe the feature you'd like to see
+      placeholder: "Describe what you want this feature to do..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this?
+      options:
+        - 📍 Now
+        - 🔜 Near Term
+        - 🕒 Later
+        - 🌱 Future
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: What does "done" look like?
+      description: How will we know when this feature is complete?
+      placeholder: |
+        - [ ] Can do X
+        - [ ] Works on Y
+        - [ ] Shows Z
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Anything else?
+      description: Screenshots, links, or other helpful info
+      placeholder: "Any additional context that might help..."

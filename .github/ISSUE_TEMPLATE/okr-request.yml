@@ -1,0 +1,54 @@
+name: 🎯 OKR (Objective & Key Results)
+description: Create quarterly objectives and key results
+title: "[OKR] "
+labels: ["OKR", "🆕 New"]
+projects: ["kafkaNchai/1"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🎯 OKR (Objective & Key Results)
+        
+        Use this template to create quarterly objectives with measurable key results.
+
+  - type: input
+    id: objective-title
+    attributes:
+      label: Objective Title
+      description: A clear, inspiring objective statement
+      placeholder: "e.g., Improve Kafka platform reliability and performance"
+    validations:
+      required: true
+
+  - type: textarea
+    id: objective-description
+    attributes:
+      label: What do you want to achieve?
+      description: Describe the objective
+      placeholder: "What outcome or impact do you want to create?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: key-results
+    attributes:
+      label: How will you measure success?
+      description: List 2-3 measurable key results
+      placeholder: |
+        1. Increase X from [current] to [target]
+        2. Reduce Y by [amount]
+        3. Achieve Z% [metric]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: quarter
+    attributes:
+      label: Which quarter?
+      description: When should this be achieved?
+      options:
+        - Q1 2025
+        - Q2 2025
+        - Q3 2025
+        - Q4 2025

@@ -1,0 +1,66 @@
+name: 🐛 Bug Report
+description: Report a bug or issue
+title: "[BUG] "
+labels: ["bug", "🆕 New"]
+projects: ["kafkaNchai/1"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🐛 Bug Report
+        
+        Use this template to report bugs or issues in the system.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What's wrong?
+      description: Describe the problem
+      placeholder: |
+        What happened:
+        [Describe the bug]
+        
+        What should happen:
+        [Describe expected behavior]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How bad is it?
+      description: Impact level
+      options:
+        - Critical - System down
+        - High - Major feature broken
+        - Medium - Partial functionality 
+        - Low - Minor issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: How to reproduce it?
+      description: Steps to recreate the bug
+      placeholder: |
+        1. Go to...
+        2. Click on...
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-logs
+    attributes:
+      label: Any error messages?
+      description: Copy/paste any error messages or logs
+      placeholder: "Error messages, stack traces, or logs..."
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Anything else?
+      description: Screenshots, environment details, workarounds
+      placeholder: "Screenshots, browser version, environment, etc..."
