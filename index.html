@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafka Platform Team - Planning Board</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f6f8fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+        .header {
+            border-bottom: 2px solid #e1e4e8;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #0366d6;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .status-card {
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            background: #f8f9fa;
+        }
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .priority-card {
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            background: #f8f9fa;
+        }
+        .test-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .repo-links {
+            margin: 20px 0;
+            padding: 20px;
+            background: #e8f4fd;
+            border-radius: 6px;
+        }
+        .repo-links a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 16px;
+            background: #0366d6;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .repo-links a:hover {
+            background: #0256cc;
+        }
+        .last-updated {
+            color: #586069;
+            font-size: 14px;
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Kafka Platform Team – Planning Board</h1>
+            <p>Central place for planning, tracking, and delivering work using Quarterly Planning</p>
+            <div class="test-section">
+                <h3>🧪 Testing Information</h3>
+                <p><strong>Testing from different browsers:</strong> This page is part of the icoe-kafka-backlog repository and can be accessed from any browser to verify changes.</p>
+                <p><strong>Last Updated:</strong> <span id="lastUpdated"></span></p>
+            </div>
+        </div>
+
+        <div class="repo-links">
+            <h3>📋 Repository Links</h3>
+            <a href="https://github.com/AmrutaChure/icoe-kafka-backlog" target="_blank">🔗 Your Fork</a>
+            <a href="https://github.com/kafkaNchai/icoe-kafka-backlog" target="_blank">🔗 Original Repo</a>
+            <a href="https://github.com/AmrutaChure/icoe-kafka-backlog/issues" target="_blank">📝 Issues</a>
+            <a href="https://github.com/AmrutaChure/icoe-kafka-backlog/projects" target="_blank">📊 Projects</a>
+        </div>
+
+        <section>
+            <h2>📋 Quarterly Planning Structure</h2>
+            <p>We follow a <strong>Quarterly Cadence</strong> with quarters broken down into <strong>six 2-week iterations</strong>.</p>
+        </section>
+
+        <section>
+            <h2>🔄 Work Item Lifecycle (Status Labels)</h2>
+            <div class="status-grid">
+                <div class="status-card">
+                    <h4>🆕 New</h4>
+                    <p>Just created; needs more details</p>
+                </div>
+                <div class="status-card">
+                    <h4>🧠 Backlog</h4>
+                    <p>Ideas, not yet refined</p>
+                </div>
+                <div class="status-card">
+                    <h4>🔍 In Discovery</h4>
+                    <p>Item is under exploration or analysis</p>
+                </div>
+                <div class="status-card">
+                    <h4>✅ Ready</h4>
+                    <p>Groomed and ready for sprint</p>
+                </div>
+                <div class="status-card">
+                    <h4>🚧 In Progress</h4>
+                    <p>Currently being worked upon</p>
+                </div>
+                <div class="status-card">
+                    <h4>🔁 In Review</h4>
+                    <p>Under code or peer review</p>
+                </div>
+                <div class="status-card">
+                    <h4>✅ Done</h4>
+                    <p>Verified and completed work</p>
+                </div>
+                <div class="status-card">
+                    <h4>⏸️ Blocked/Paused</h4>
+                    <p>Work blocked/paused</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🚀 Roadmap Priority Labels</h2>
+            <div class="priority-grid">
+                <div class="priority-card">
+                    <h4>📍 Now</h4>
+                    <p>Actively being worked on or prioritized in the current or next sprint</p>
+                </div>
+                <div class="priority-card">
+                    <h4>🔜 Near Term</h4>
+                    <p>Planned for the upcoming quarter</p>
+                </div>
+                <div class="priority-card">
+                    <h4>🕒 Later</h4>
+                    <p>Not prioritized yet but part of roadmap for this year or next cycle</p>
+                </div>
+                <div class="priority-card">
+                    <h4>🌱 Future</h4>
+                    <p>A good idea or concept — acknowledged but not on the active roadmap yet</p>
+                </div>
+                <div class="priority-card">
+                    <h4>❓ No Roadmap Priority</h4>
+                    <p>Not yet evaluated or not aligned with current roadmap priorities</p>
+                </div>
+                <div class="priority-card">
+                    <h4>📦 Delivered</h4>
+                    <p>Completed in a previous roadmap cycle</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📋 Board Views & Navigation</h2>
+            <div class="status-grid">
+                <div class="status-card">
+                    <h4>📌 Backlog View</h4>
+                    <p>List of all potential work. Add new items at the bottom of the list.</p>
+                </div>
+                <div class="status-card">
+                    <h4>🎯 OKR View</h4>
+                    <p>Focused view of quarterly objectives</p>
+                </div>
+                <div class="status-card">
+                    <h4>🚀 Feature View</h4>
+                    <p>View features sorted by roadmap priority</p>
+                </div>
+                <div class="status-card">
+                    <h4>👥 Team View</h4>
+                    <p>Filter by Assignee. View all tasks owned by each team member.</p>
+                </div>
+                <div class="status-card">
+                    <h4>🧭 Daily Standup View</h4>
+                    <p>Meant for daily check-ins</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="last-updated">
+            Last updated: <span id="timestamp"></span>
+        </div>
+    </div>
+
+    <script>
+        // Set current timestamp
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+        
+        // Add some interactive functionality for testing
+        console.log('Kafka Planning Board loaded successfully!');
+        console.log('Repository: icoe-kafka-backlog');
+        console.log('Testing from browser:', navigator.userAgent);
+    </script>
+</body>
+</html>

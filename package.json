@@ -4,7 +4,9 @@
   "description": "Copy labels from a main issue (labeled 'feature') to referenced sub-issues",
   "main": "scripts/inherit-labels.js",
   "scripts": {
-    "start": "node scripts/inherit-labels.js"
+    "start": "node scripts/inherit-labels.js",
+    "serve": "node server.js",
+    "test": "npm run serve"
   },
   "author": "kafkaNchai",
   "license": "MIT",
